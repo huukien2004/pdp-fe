@@ -30,6 +30,7 @@ nest g res module-name
 
 Run [http://localhost:3000](http://localhost:3000)
 
+
 ## Test
 
 ```sh
@@ -48,6 +49,21 @@ node dist/app
 # OR
 npm start
 ```
+
+## Features
+
+We create this boilerplate using NestJS's default boilerplate with the following add-on features:
+
+- ***Authentication & Authorization***: JWT & Passport
+- ***API Documentation***: Swagger
+- ***Object–relational mapping***: TypeORM
+- ***Environment Variables***: dotenv
+- ***Database***: mySQL
+- ***Code Style***: ESlint + Prettier (with `eslint-config-airbnb-typescript`)
+- ***TypeScript*** supported
+
+Please check the `package.json` for more details.
+
 
 ## Folders
 
