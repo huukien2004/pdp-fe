@@ -1,142 +1,96 @@
-# Coding rules and conventions
+# Megamind team's Coding and Style Guide
 
-## File Naming for Class
 
-```ts
-export class PascalCaseSuffix {} //= pascal-case.suffix.ts
-// Except for suffix, PascalCase to hyphen-case
-class FooBarNaming {} //= foo-bar.naming.ts
-class FooController {} //= foo.controller.ts
-class BarQueryDto {} //= bar-query.dto.ts
-```
 
-## Interface Naming
+## Versioning
 
-Set "I" to the first letter of the interface's name
+We use **Semantic Versioning 2.0.0** to set the version. Learn more [here](https://semver.org/)
 
-```ts
-interface IUser {}
-interface ICustomeUser extends IUser {}
-interface IThirdCustomeUser extends ICustomeUser {}
-```
 
-## Index Exporting
 
-```diff
-# It is recommended to place index.ts in each folder and export.
-# Unless it's a special case, it is import from a folder instead of directly from a file.
-- import { FooController } from './controllers/foo.controller';
-- import { BarController } from './controllers/bar.controller';
-+ import { FooController, BarController } from './controllers';
-# My preferred method is to place only one fileOrFolder name at the end of the path.
-- import { UtilService } from '../common/providers/util.service';
-+ import { UtilService } from '../common';
-```
+## Tools that we use
 
-### Circular dependency
+- For code linting, we use [ESlint](https://eslint.org/) following [Airbnb's Style Guide](https://github.com/airbnb/javascript). We also use [eslint-config-airbnb-typescript](https://www.npmjs.com/package/eslint-config-airbnb-typescript) to support TypeScript.
 
-<https://docs.nestjs.com/fundamentals/circular-dependency>
+- For code formatting, we use [Prettier](https://prettier.io/).
 
-```diff
-# Do not use a path that ends with a dot.
-- import { FooService } from '.';
-- import { BarService } from '..';
-+ import { FooService } from './foo.service';
-+ import { BarService } from '../providers';
-```
+**Note:** We use the **same configuration files across all projects** to maintain coding consistency and readability. These configurations files are updated and maintained by Lead Developers (currently Mr.Dat). Please contact him if you need to set up your repository.
 
-# Variables Naming
 
-- [English language](#english-language)
-- [Naming convention](#naming-convention)
-- [S-I-D](#s-i-d)
-- [Avoid contractions](#avoid-contractions)
-- [Avoid context duplication](#avoid-context-duplication)
-- [Reflect the expected result](#reflect-the-expected-result)
-- [Naming functions](#naming-functions)
-  - [A/HC/LC pattern](#ahclc-pattern)
-    - [Actions](#actions)
-    - [Context](#context)
-    - [Prefixes](#prefixes)
-- [Singular and Plurals](#singular-and-plurals)
 
----
+## Using inline comments
+We use inline comments to explain hard-to-understand concepts (variables, logics, functions,..). 
+
+Inline comments are for supporting purposes, so it **should be 1 sentence only** and **should only be used when necessary** .
+
+- *Variable*: Explain the meaning of the variable in case you **do not know how to name it** in English or **not sure if you name it correctly**.
+- *Function*: It is recommend to write 1 inline comment before to **summarize the purpose(s) of the function**. 
+- *Logic*: For logic that is **not obvious**. Should have 1 inline comment to **explain the overall logic** before. You can add extra comments for each line of code if needed to explain the logic behind.
+- (optional) *Section*: For long files or have multiple sections. Should have 1 inline comment before to explain the purpose of each section.
+
+
+
+## Index
+
+It is recommended to create a `index.ts` file in each folder and export (especially in folders that contain shared components or modules). Unless it's a special case, it is recommended to import from a folder instead of directly from a file.
+
+
+
+## General rules 
 
 Naming things is hard. This sheet attempts to make it easier.
 
-Although these suggestions can be applied to any programming language, I will use JavaScript to illustrate them in practice.
-
-## English language
+### English language
 
 Use English language when naming your variables and functions.
 
-```ts
+```js
 /* Bad */
-const primerNombre = 'Gustavo';
-const amigos = ['Kate', 'John'];
+const primerNombre = 'Gustavo'
+const amigos = ['Kate', 'John']
 
 /* Good */
-const firstName = 'Gustavo';
-const friends = ['Kate', 'John'];
+const firstName = 'Gustavo'
+const friends = ['Kate', 'John']
 ```
 
-> Like it or not, English is the dominant language in programming: the syntax of all programming languages is written in English, as well as countless documentations and educational materials. By writing your code in English you dramatically increase its cohesiveness.
+### S-I-D
 
-## Naming convention
+A name must be ***short***, ***intuitive*** and ***descriptive***:
 
-Pick **one** naming convention and follow it. It may be `camelCase`, `PascalCase`, `snake_case`, or anything else, as long as it remains consistent. Many programming languages have their own traditions regarding naming conventions; check the documentation for your language or study some popular repositories on Github!
+- **Short**. A name **must not take long to type** and, therefore, remember;
+- **Intuitive**. A name **must read naturally**, as close to the common speech as possible;
+- **Descriptive**. A name **must reflect what it does/possesses** in the most efficient way.
 
-```ts
+```js
 /* Bad */
-const page_count = 5;
-const shouldUpdate = true;
+const a = 5 // "a" could mean anything
+const isPaginatable = a > 10 // "Paginatable" sounds extremely unnatural
+const shouldPaginatize = a > 10 // Made up verbs are so much fun!
 
 /* Good */
-const pageCount = 5;
-const shouldUpdate = true;
-
-/* Good as well */
-const page_count = 5;
-const should_update = true;
+const postCount = 5
+const hasPagination = postCount > 10
+const shouldPaginate = postCount > 10 // alternatively
 ```
 
-## S-I-D
+### Avoid contractions
 
-A name must be _short_, _intuitive_ and _descriptive_:
+**Do not** use contractions. They contribute to nothing but decreased readability of the code. Finding a short, descriptive name may be hard, but contraction is not an excuse for not doing so.
 
-- **Short**. A name must not take long to type and, therefore, remember;
-- **Intuitive**. A name must read naturally, as close to the common speech as possible;
-- **Descriptive**. A name must reflect what it does/possesses in the most efficient way.
-
-```ts
+```js
 /* Bad */
-const a = 5; // "a" could mean anything
-const isPaginatable = a > 10; // "Paginatable" sounds extremely unnatural
-const shouldPaginatize = a > 10; // Made up verbs are so much fun!
+const onItmClk = () => {}
 
 /* Good */
-const postCount = 5;
-const hasPagination = postCount > 10;
-const shouldPaginate = postCount > 10; // alternatively
+const onItemClick = () => {}
 ```
 
-## Avoid contractions
-
-Do **not** use contractions. They contribute to nothing but decreased readability of the code. Finding a short, descriptive name may be hard, but contraction is not an excuse for not doing so.
-
-```ts
-/* Bad */
-const onItmClk = () => {};
-
-/* Good */
-const onItemClick = () => {};
-```
-
-## Avoid context duplication
+### Avoid context duplication
 
 A name should not duplicate the context in which it is defined. Always remove the context from a name if that doesn't decrease its readability.
 
-```ts
+```js
 class MenuItem {
   /* Method name duplicates the context (which is "MenuItem") */
   handleMenuItemClick = (event) => { ... }
@@ -146,29 +100,121 @@ class MenuItem {
 }
 ```
 
-## Reflect the expected result
+### Reflect the expected result
 
 A name should reflect the expected result.
 
-```tsx
+```jsx
 /* Bad */
-const isEnabled = itemCount > 3;
-return <Button disabled={!isEnabled} />;
+const isEnabled = itemCount > 3
+return <Button disabled={!isEnabled} />
 
 /* Good */
-const isDisabled = itemCount <= 3;
-return <Button disabled={isDisabled} />;
+const isDisabled = itemCount <= 3
+return <Button disabled={isDisabled} />
 ```
 
----
 
-## Naming functions
+
+## Naming Class
+
+(to be defined)
+
+
+
+## Naming Interface
+
+Set "I" to the first letter of the interface's name. Example:
+
+```js
+interface IUser {}
+interface ICustomeUser extends IUser {}
+interface IThirdCustomeUser extends ICustomeUser {}
+```
+
+
+
+## Naming Variables
+
+### Prefixes
+
+Using Prefixes to enhance the meaning of a variable.
+
+#### `is`
+
+Describes a **characteristic or state** of the current context (usually `boolean`).
+
+```js
+const color = 'blue'
+const isBlue = color === 'blue' // characteristic
+const isPresent = true // state
+
+if (isBlue && isPresent) {
+  console.log('Blue is present!')
+}
+```
+
+#### `has`
+
+Describes whether the current context **possesses a certain value or state** (usually `boolean`).
+
+```js
+/* Bad */
+const isProductsExist = productsCount > 0
+const areProductsPresent = productsCount > 0
+
+/* Good */
+const hasProducts = productsCount > 0
+```
+
+#### `should`
+
+Reflects a **positive conditional statement** (usually `boolean`) coupled with a certain action.
+
+```js
+function shouldUpdateUrl(url, expectedUrl) {
+  return url !== expectedUrl
+}
+```
+
+#### `min`/`max`
+
+Represents a **minimum or maximum value**. Used when **describing boundaries or limits**.
+
+```js
+/**
+ * Renders a random amount of posts within
+ * the given min/max boundaries.
+ */
+function renderPosts(posts, minPosts, maxPosts) {
+  return posts.slice(0, randomBetween(minPosts, maxPosts))
+}
+```
+
+#### `prev`/`next`
+
+Indicate the **previous or the next state of a variable** in the current context. Used when **describing state transitions**.
+
+```jsx
+async function getPosts() {
+  const prevPosts = this.state.posts
+
+  const latestPosts = await fetch('...')
+  const nextPosts = concat(prevPosts, latestPosts)
+
+  this.setState({ posts: nextPosts })
+}
+```
+
+
+
+## Naming Functions
 
 ### A/HC/LC Pattern
 
 There is a useful pattern to follow when naming functions:
 
-```
+```json
 prefix? + action (A) + high context (HC) + low context? (LC)
 ```
 
@@ -181,95 +227,95 @@ Take a look at how this pattern may be applied in the table below.
 | `handleClickOutside`   |          | `handle`   | `Click`           | `Outside`        |
 | `shouldDisplayMessage` | `should` | `Display`  | `Message`         |                  |
 
-> **Note:** The order of context affects the meaning of a variable. For example, `shouldUpdateComponent` means _you_ are about to update a component, while `shouldComponentUpdate` tells you that _component_ will update on itself, and you are but controlling when it should be updated.
-> In other words, **high context emphasizes the meaning of a variable**.
+> **Note:** The order of context affects the meaning of a variable. For example, `shouldUpdateComponent` means ***you*** are about to update a component, while `shouldComponentUpdate` tells you that ***component*** will update on itself, and you are controlling when it should be updated.
+> In other words, **high context tells the meaning of a variable**.
 
 ---
 
 ### Actions
 
-The verb part of your function name. The most important part responsible for describing what the function _does_.
+The verb part of your function name. The most important part responsible for describing **what the function does**.
 
 #### `get`
 
-Accesses data immediately (i.e. shorthand getter of internal data).
+**Accesses data immediately** (i.e. shorthand getter of internal data).
 
-```ts
+```js
 function getFruitCount() {
-  return this.fruits.length;
+  return this.fruits.length
 }
 ```
 
 > See also [compose](#compose).
 
-You can use `get` when performing asynchronous operations as well:
+You can use `get` when **performing asynchronous operations** as well:
 
-```ts
+```js
 async function getUser(id) {
-  const user = await fetch(`/api/user/${id}`);
-  return user;
+  const user = await fetch(`/api/user/${id}`)
+  return user
 }
 ```
 
 #### `set`
 
-Sets a variable in a declarative way, with value `A` to value `B`.
+**Sets a variable in a declarative wa**y, with value `A` to value `B`.
 
-```ts
-let fruits = 0;
+```js
+let fruits = 0
 
 function setFruits(nextFruits) {
-  fruits = nextFruits;
+  fruits = nextFruits
 }
 
-setFruits(5);
-console.log(fruits); // 5
+setFruits(5)
+console.log(fruits) // 5
 ```
 
 #### `reset`
 
-Sets a variable back to its initial value or state.
+**Sets a variable back to its initial value or state.**
 
-```ts
-const initialFruits = 5;
-let fruits = initialFruits;
-setFruits(10);
-console.log(fruits); // 10
+```js
+const initialFruits = 5
+let fruits = initialFruits
+setFruits(10)
+console.log(fruits) // 10
 
 function resetFruits() {
-  fruits = initialFruits;
+  fruits = initialFruits
 }
 
-resetFruits();
-console.log(fruits); // 5
+resetFruits()
+console.log(fruits) // 5
 ```
 
 #### `remove`
 
-Removes something _from_ somewhere.
+**Removes something _from_ somewhere.**
 
-For example, if you have a collection of selected filters on a search page, removing one of them from the collection is `removeFilter`, **not** `deleteFilter` (and this is how you would naturally say it in English as well):
+For example, if you have a collection of selected filters on a search page, removing one of them from the collection is `removeFilter`, **not** `deleteFilter`:
 
-```ts
+```js
 function removeFilter(filterName, filters) {
-  return filters.filter((name) => name !== filterName);
+  return filters.filter((name) => name !== filterName)
 }
 
-const selectedFilters = ['price', 'availability', 'size'];
-removeFilter('price', selectedFilters);
+const selectedFilters = ['price', 'availability', 'size']
+removeFilter('price', selectedFilters)
 ```
 
 > See also [delete](#delete).
 
 #### `delete`
 
-Completely erases something from the realms of existence.
+**Completely erases something.**
 
 Imagine you are a content editor, and there is that notorious post you wish to get rid of. Once you clicked a shiny "Delete post" button, the CMS performed a `deletePost` action, **not** `removePost`.
 
-```ts
+```js
 function deletePost(id) {
-  return database.find({ id }).delete();
+  return database.find({ id }).delete()
 }
 ```
 
@@ -277,17 +323,14 @@ function deletePost(id) {
 
 > **`remove` or `delete`?**
 >
-> When the difference between `remove` and `delete` is not so obvious to you, I'd suggest looking at their opposite actions - `add` and `create`.
-> The key difference between `add` and `create` is that `add` needs a destination while `create` **requires no destination**. You `add` an item _to somewhere_, but you don't "`create` it _to somewhere_".
-> Simply pair `remove` with `add` and `delete` with `create`.
-
+> When the difference between `remove` and `delete` is not so obvious to you, I'd suggest looking at the key difference: `remove` needs a destination while `delete` **requires no destination**.
 #### `compose`
 
-Creates new data from the existing one. Mostly applicable to strings, objects, or functions.
+**Creates new data from the existing one**. Mostly applicable to strings, objects, or functions.
 
-```ts
+```js
 function composePageUrl(pageName, pageId) {
-  return pageName.toLowerCase() + '-' + pageId;
+  return pageName.toLowerCase() + '-' + pageId
 }
 ```
 
@@ -295,127 +338,34 @@ function composePageUrl(pageName, pageId) {
 
 #### `handle`
 
-Handles an action. Often used when naming a callback method.
+**Handles an action**. Often used when **naming a callback method**.
 
-```ts
+```js
 function handleLinkClick() {
-  console.log('Clicked a link!');
+  console.log('Clicked a link!')
 }
 
-link.addEventListener('click', handleLinkClick);
+link.addEventListener('click', handleLinkClick)
 ```
 
 ---
 
 ### Context
 
-A domain that a function operates on.
+**A domain that a function operates on.**
 
-A function is often an action on _something_. It is important to state what its operable domain is, or at least an expected data type.
+A function is often an action on **something**. It is important to state what its operable domain is, or at least an expected data type.
 
-```ts
+```js
 /* A pure function operating with primitives */
 function filter(list, predicate) {
-  return list.filter(predicate);
+  return list.filter(predicate)
 }
 
 /* Function operating exactly on posts */
 function getRecentPosts(posts) {
-  return filter(posts, (post) => post.date === Date.now());
+  return filter(posts, (post) => post.date === Date.now())
 }
 ```
-
-> Some language-specific assumptions may allow omitting the context. For example, in JavaScript, it's common that `filter` operates on Array. Adding explicit `filterArray` would be unnecessary.
 
 ---
-
-### Prefixes
-
-Prefix enhances the meaning of a variable. It is rarely used in function names.
-
-#### `is`
-
-Describes a characteristic or state of the current context (usually `boolean`).
-
-```ts
-const color = 'blue';
-const isBlue = color === 'blue'; // characteristic
-const isPresent = true; // state
-
-if (isBlue && isPresent) {
-  console.log('Blue is present!');
-}
-```
-
-#### `has`
-
-Describes whether the current context possesses a certain value or state (usually `boolean`).
-
-```ts
-/* Bad */
-const isProductsExist = productsCount > 0;
-const areProductsPresent = productsCount > 0;
-
-/* Good */
-const hasProducts = productsCount > 0;
-```
-
-#### `should`
-
-Reflects a positive conditional statement (usually `boolean`) coupled with a certain action.
-
-```ts
-function shouldUpdateUrl(url, expectedUrl) {
-  return url !== expectedUrl;
-}
-```
-
-#### `min`/`max`
-
-Represents a minimum or maximum value. Used when describing boundaries or limits.
-
-```ts
-/**
- * Renders a random amount of posts within
- * the given min/max boundaries.
- */
-function renderPosts(posts, minPosts, maxPosts) {
-  return posts.slice(0, randomBetween(minPosts, maxPosts));
-}
-```
-
-#### `prev`/`next`
-
-Indicate the previous or the next state of a variable in the current context. Used when describing state transitions.
-
-```tsx
-async function getPosts() {
-  const prevPosts = this.state.posts;
-
-  const latestPosts = await fetch('...');
-  const nextPosts = concat(prevPosts, latestPosts);
-
-  this.setState({ posts: nextPosts });
-}
-```
-
-### Singular and Plurals
-
-Like a prefix, variable names can be made singular or plural depending on whether they hold a single value or multiple values.
-
-```ts
-/* Bad */
-const friends = 'Bob';
-const friend = ['Bob', 'Tony', 'Tanya'];
-
-/* Good */
-const friend = 'Bob';
-const friends = ['Bob', 'Tony', 'Tanya'];
-```
-
-## Research links
-
-- [Nest Sample](https://github.com/nestjs/nest/tree/master/sample)
-- [Awesome Nest](https://github.com/juliandavidmr/awesome-nestjs)
-- [NestJS](https://docs.nestjs.com)
-- [TypeORM](https://typeorm.io)
