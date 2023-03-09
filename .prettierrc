@@ -1,11 +1,4 @@
 {
-  "no-mixed-spaces-and-tabs": [
-    "error",
-    "smart-tabs"
-  ],
-  "no-unused-vars": [
-    "error"
-  ],
   "singleQuote": true,
   "trailingComma": "all",
   "tabWidth": 2,
