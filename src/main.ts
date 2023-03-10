@@ -1,11 +1,10 @@
 import { useContainer } from 'class-validator';
 import { NestFactory, Reflector } from '@nestjs/core';
-import { AppModule } from './modules/app.module';
-import { ClassSerializerInterceptor, VersioningType, VERSION_NEUTRAL } from '@nestjs/common';
-import { ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, VersioningType, VERSION_NEUTRAL, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { json, urlencoded } from 'express';
+import { AppModule } from './modules/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);

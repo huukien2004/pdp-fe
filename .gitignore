@@ -6,6 +6,7 @@
 #Env
 .env
 *.http
+package-lock.json
 
 # Logs
 /logs

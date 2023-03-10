@@ -6,11 +6,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['prettier', '@typescript-eslint/eslint-plugin'],
-  extends: [
-    'airbnb-typescript',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   settings: {
     'import/resolver': {
       typescript: {
@@ -41,16 +37,11 @@ module.exports = {
         allowForLoopAfterthoughts: true,
       },
     ],
-    'import/no-extraneous-dependencies': [
-      'error',
-      {
-        devDependencies: ['**/*.test.js', '**/*.test.ts', 'src/tests/**/*'],
-      },
-    ],
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
     'no-unused-vars': 'off',
+    'no-console': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'import/no-cycle': 'off',
     '@typescript-eslint/no-shadow': 'off',

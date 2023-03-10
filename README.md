@@ -25,11 +25,10 @@ npm run entity:load
 npm run start:dev
 npm run start:repl
 # add new module with template
-nest g res module-name
+nest g res modules/module-name
 ```
 
 Run [http://localhost:3000](http://localhost:3000)
-
 
 ## Test
 
@@ -54,16 +53,15 @@ npm start
 
 We create this boilerplate using NestJS's default boilerplate with the following add-on features:
 
-- ***Authentication & Authorization***: JWT & Passport
-- ***API Documentation***: Swagger
-- ***Object–relational mapping***: TypeORM
-- ***Environment Variables***: dotenv
-- ***Database***: mySQL
-- ***Code Style***: ESlint + Prettier (with `eslint-config-airbnb-typescript`)
-- ***TypeScript*** supported
+- **_Authentication & Authorization_**: JWT & Passport
+- **_API Documentation_**: Swagger
+- **_Object–relational mapping_**: TypeORM
+- **_Environment Variables_**: dotenv
+- **_Database_**: mySQL
+- **_Code Style_**: ESlint + Prettier (with `eslint-config-airbnb-typescript`)
+- **_TypeScript_** supported
 
 Please check the `package.json` for more details.
-
 
 ## Folders
 

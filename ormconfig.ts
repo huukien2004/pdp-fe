@@ -5,15 +5,16 @@ import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOpti
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
-const SnakeNamingStrategy = require('typeorm-naming-strategies').SnakeNamingStrategy;
+const { SnakeNamingStrategy } = require('typeorm-naming-strategies');
+
 const config: MysqlConnectionOptions = {
   host: process.env.DB_HOST,
-  port: 3306,
+  port: +process.env.DB_PORT,
   logging: process.env.TYPEORM_LOGGING === 'true',
   username: process.env.DB_USERNAME || '',
   password: process.env.DB_PASSWORD || '',
   type: 'mysql',
-  database: process.env.DB_DATABASE || '',
+  database: process.env.DB_NAME || '',
   entities: ['dist/**/*.entity{.ts,.js}'],
   synchronize: process.env.DB_SYNCHRONIZE === 'true',
   charset: 'utf8mb4',
