@@ -2,9 +2,37 @@
 
 
 
+## Git Branching Strategies
+
+We use a similar approach to [Git Flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow#:~:text=What%20is%20Gitflow%3F,lived%20branches%20and%20larger%20commits.) to manage branches and merge requests:
+
+- `main` (or `master`): represents the production environment and contains the latest stable version of the code.
+- `develop`: represents the development environment and contains the latest changes that are being actively developed for the next release.
+- `feature`: used for developing new features or fixing bugs. They are created from the latest version of the `develop` branch and merged back into the `develop` branch once they are complete and tested.
+- `release`: used for preparing code for pre-production testing. They are created from the latest version of the `develop` branch and merged into both the `develop` and `main` branches once testing is complete.
+- `hotfix`: used for urgent fixes that need to be deployed to the production environment. They are created from the latest version of the `main` branch and merged into both the `develop` and `main` branches once testing is complete.
+
+### Step-by-step instructions:
+
+1. Developers create a `feature` branch based on the latest version of the `develop` branch with name `feature/<issue_id>/<feature_summary>`.
+2. Developers work on the new feature or bug fix in the `feature` branch. Once a feature is complete and tested, **create a merge request** and **assign a reviewer** from the `feature` branch into the `develop` branch.
+3. When a set of features is ready for pre-production testing, create a `release` branch from the `develop` branch with name `release/<version>`. 
+4. Deploy the code in the `release` branch to the **pre-production environment** for testing. 
+5. If any issues are found during pre-production testing, fix the issues and make commits to the `release` branch and repeat step 4.
+6. Once the `release` branch has passed testing, **create merge requests** and **assign reviewers** it into both `main` branch and `develop` branch.
+7. Create a tag in the `main` branch according to the ***Semantic Versioning 2.0.0***. Deploy the latest version of the code in the `main` branch to the **production environment**.
+8. If a hotfix is needed for the production environment, create a `hotfix` branch from the `main` branch with name `hotfix/<version>/fix_summary` and make the necessary fixes.
+9. Deploy the code in the `hotfix` branch to the **pre-production environment** for testing.
+10. If any issues are found during step 9, fix the issues and make commits to the `hotfix` branch and repeat step 9.
+11. Once the hotfix has passed testing, **create merge requests** and **assign reviewers** from the `hotfix` branch into both `main` and `develop` branches.
+12. Create a tag in the `main` branch according to the ***Semantic Versioning 2.0.0***. Deploy the latest version of the code in the `main` branch to the **production environment**.
+13. (optional) Review and remove unnecessary branches after each deployment.
+
+
+
 ## Versioning
 
-We use **Semantic Versioning 2.0.0** to set the version. Learn more [here](https://semver.org/)
+We use the ***Semantic Versioning 2.0.0*** to set the version. Learn more [here](https://semver.org/)
 
 
 
